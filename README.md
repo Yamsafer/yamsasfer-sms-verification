@@ -18,20 +18,20 @@ Fast use
 `angular.module("YourApp", ["ysSmsVerification"])`.
 
 * Use directive inside your html
-		<ys-sms-verification></ys-sms-verification>  
+	`<ys-sms-verification></ys-sms-verification>`
 
 Slow use
 --------
 
 Yamsafer Sms Verification directive consists of two other child directives
 1. Mobile Number Directive  
-	* Responsible for  
+	*Responsible for  
 		a. Input a valid international phone number.  
 		b. Submit phone number for the `api` to send sms to that phone.  
 		c. Inform the app that phone submission has happened and whether it succeeded or failed.  
-	* Usage
+	*Usage
 			<mobile-number></mobile-number>
-	* Template
+	*Template
 			<form name="mobileNumberForm" ng-submit='submitNumber(phoneNumber)' >
 				<div ng-if="fail" class="alert alert-danger text-center">
 					Something went wrong, make sure you entered a valid phone number, or try a different one
@@ -52,7 +52,7 @@ Yamsafer Sms Verification directive consists of two other child directives
 				</div>
 			</form>
 
-	* Renders  
+	*Renders  
 		![Alt text](documentation/images/mobileNumber.png)
 		![Alt text](documentation/images/mobileNumberCountries.png)  
 
