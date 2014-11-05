@@ -1,0 +1,15 @@
+{
+  "name": "karma-sinon-chai",
+  "version": "0.0.0",
+  "main": "index.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "sinonjs": "~1.7.1"
+  }
+}

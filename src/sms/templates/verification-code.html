@@ -1,0 +1,15 @@
+<form name="verificationCodeForm" ng-submit='submitCode(code)' >
+	<div class='form-group has-feedback'>
+		<input class='form-control input-lg' type='text' name="code" ng-model='code' ng-minlength="5" ng-maxlength="7" ng-required='true' placeholder='Verification Code ' style=" font-size: 30px;height: 70px;letter-spacing: 7px;font-weight: bold;font-family: monospace;text-align: center; " />
+		<span class="glyphicon glyphicon-lock form-control-feedback text-danger" style="width: 50px;height: 50px;line-height: 25px;font-size: 27px;right: 10px;" /></span>
+	</div>
+	<p class="text-center">
+		You should receive verification code within : <timer autostart="false" countdown="5" max-time-unit="'minute'" interval="1000" finish-callback="timerFinished()">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer>
+	</p>
+	<p class="text-center" ng-show="timeout">
+		Didn't receive code ? <a ng-click="tryAgain()" href="">Try a different number</a>
+	</p>
+	<div class='form-group'>
+		<button type='submit' class='btn btn-primary btn-block btn-lg'>Submit</button>
+	</div>
+</form>

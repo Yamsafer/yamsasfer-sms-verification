@@ -1,0 +1,19 @@
+<form name="mobileNumberForm" ng-submit='submitNumber(phoneNumber)' >
+	<div ng-if="fail" class="alert alert-danger text-center">
+		Something went wrong, make sure you entered a valid phone number, or try a different one
+	</div>
+	<div class='form-group'>
+		<input class='form-control input-lg'
+			type="tel"
+			preferred-countries="ps, sa,jo,kw"
+			responsive-dropdown='true'
+			default-country="ps"
+			international-phone-number
+			name="phoneNumber"
+			ng-model="phoneNumber"
+			ng-required="true" />
+	</div>
+	<div class='form-group'>
+		<button type='submit'  class='btn btn-primary btn-block btn-lg'>Submit</button>
+	</div>
+</form>
