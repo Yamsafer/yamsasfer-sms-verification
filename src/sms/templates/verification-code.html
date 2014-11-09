@@ -1,15 +1,40 @@
-<form name="verificationCodeForm" ng-submit='submitCode(code)' >
-	<div class='form-group has-feedback'>
-		<input class='form-control input-lg' type='text' name="code" ng-model='code' ng-minlength="5" ng-maxlength="7" ng-required='true' placeholder='Verification Code ' style=" font-size: 30px;height: 70px;letter-spacing: 7px;font-weight: bold;font-family: monospace;text-align: center; " />
-		<span class="glyphicon glyphicon-lock form-control-feedback text-danger" style="width: 50px;height: 50px;line-height: 25px;font-size: 27px;right: 10px;" /></span>
-	</div>
-	<p class="text-center">
-		You should receive verification code within : <timer autostart="false" countdown="5" max-time-unit="'minute'" interval="1000" finish-callback="timerFinished()">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer>
-	</p>
-	<p class="text-center" ng-show="timeout">
-		Didn't receive code ? <a ng-click="tryAgain()" href="">Try a different number</a>
-	</p>
-	<div class='form-group'>
-		<button type='submit' class='btn btn-primary btn-block btn-lg'>Submit</button>
-	</div>
+<form class="form-horizontal" name="verificationCodeForm" ng-submit='submitCode(code)'>
+    <div class="form-group form-group-lg">
+        <label for="inputEmail3" class="col-sm-3 control-label">Verfication Code</label>
+        <div class="col-sm-5">
+            <div class="form-group form-group-lg">
+                <div class="col-sm-12">
+                    <div class="input-group">
+                        <input class='form-control' type='text' name="code" ng-model='code' ng-minlength="5" ng-maxlength="7" ng-required='true' placeholder='_______ ' 
+                        style="font-size: 30px;height: 70px;letter-spacing: 7px;font-family: monospace;text-align: center; color:black; " />
+                        <span class="input-group-btn">
+                            <a class="btn btn-default" type="button" style="padding: 14px 24px;font-size: 28px;color:black;" disabled><i class="fa fa-lock"></i>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class='form-group form-group-lg'>
+                <div class="col-sm-12">
+                    <button type='submit' class='btn btn-primary btn-block btn-lg'>Complete Booking</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <p class="help-block">
+                Your code is being delivered by SMS.
+                <br>This may take up to 2:30 minutes depending on your network operator.
+                <br>
+                <strong>
+                    <small>
+                        <timer autostart="false" countdown="5" max-time-unit="'minute'" interval="1000" finish-callback="timerFinished()">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer> <i class="fa fa-clock-o"></i> passed.
+                    </small>
+                </strong>
+
+                <span class="text-center" ng-show="timeout">
+                    Didn't receive code ? <a ng-click="tryAgain()" href="">Try a different number</a>
+                </span>
+            </p>
+        </div>
+    </div>
 </form>
