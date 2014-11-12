@@ -27,17 +27,17 @@ angular.module('ysSmsVerification.services', []).service('smsService', ['$q',
 			console.log(num)
 			var deferred = $q.defer();
 
-			$timeout(function() {
-				deferred.resolve({
-					status: "ok"
-				});
-			}, 1000)
+			// $timeout(function() {
+			// 	deferred.resolve({
+			// 		status: "ok"
+			// 	});
+			// }, 1000)
 
-			// $http.post('https://staging.yamsafer.me/sms/create', num).success(function(data, status, headers, config) {
-			// 	deferred.resolve(data);
-			// }).error(function(data, status, headers, config) {
-			// 	deferred.reject(data);
-			// });
+			$http.post('https://staging.yamsafer.me/sms/create', num).success(function(data, status, headers, config) {
+				deferred.resolve(data);
+			}).error(function(data, status, headers, config) {
+				deferred.reject(data);
+			});
 
 			return deferred.promise;
 		}
