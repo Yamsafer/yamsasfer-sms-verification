@@ -58,11 +58,11 @@ angular.module('ysSmsVerification.services', []).service('smsService', ['$q',
 			// }, 1000)
 
 			$http.post('https://staging.yamsafer.me/sms/verify', postData).success(function(data, status, headers, config) {
-				
+
 				if (status == 200) {
 					deferred.resolve(data);
 				}
-				
+
 				if (status.code == 400 || status.code == 500) {
 					deferred.reject(data);
 				}

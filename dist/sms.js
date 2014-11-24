@@ -118,9 +118,9 @@ angular.module('ysSmsVerification', [
 	'timer'
 ]);
 
-angular.module("ysSmsVerification.templates").run(["$templateCache", function($templateCache) {$templateCache.put("mobile-number.html","<form class=\"form-horizontal\" name=\"mobileNumberForm\" ng-submit=\'submitNumber(phoneNumber)\'>\n\n    <div class=\"form-group form-group-lg\">\n        <label for=\"inputEmail3\" class=\"col-sm-3 control-label\">Phone Number</label>\n        <div class=\"col-sm-5\">\n\n            <div ng-if=\"fail\" class=\"alert alert-danger text-center\">\n                Something went wrong, make sure you entered a valid phone number, or try a different one\n            </div>\n\n            <div class=\"form-group form-group-lg\">\n                <div class=\"col-sm-12\">\n                    <input class=\'form-control input-lg\' type=\"text\" preferred-countries=\"ps, sa,jo,kw\" responsive-dropdown=\'true\' default-country=\"ps\" international-phone-number name=\"phoneNumber\" ng-model=\"phoneNumber\" ng-required=\"true\" />\n                </div>\n            </div>\n            <div class=\"form-group form-group-lg\">\n                <div class=\"col-sm-12\">\n                    <button ng-disabled=\"submittingPhone\" type=\'submit\' class=\'btn btn-primary btn-block btn-lg\'>Send Me SMS\n                        <span ng-if=\"submittingPhone\"> <i class=\"fa fa-spinner fa-spin\"></i> \n                        </span>\n                    </button>\n                </div>\n            </div>\n        </div>\n        <div class=\"col-sm-4\">\n            <p class=\"help-block\">\n                <strong>We will send you a verification code by SMS.</strong>\n                <br />You will need this code to confirm your booking.</p>\n        </div>\n    </div>\n</form>\n");
+angular.module("ysSmsVerification.templates").run(["$templateCache", function($templateCache) {$templateCache.put("mobile-number.html","<form class=\"form-horizontal\" name=\"mobileNumberForm\" ng-submit=\'submitNumber(phoneNumber)\'>\n\n    <div class=\"form-group form-group-lg has-feedback\">\n        <label for=\"inputEmail3\" class=\"col-sm-3 control-label\">Phone Number</label>\n        <div class=\"col-sm-5\">\n\n            <div ng-if=\"fail\" class=\"alert alert-danger text-center\">\n                Something went wrong, make sure you entered a valid phone number, or try a different one\n            </div>\n\n            <div class=\"form-group form-group-lg has-feedback\">\n                <div class=\"col-sm-12\">\n                    <input class=\'form-control input-lg\' type=\"text\" utils-script=\"\'utilsScript\'\" preferred-countries=\"ps, sa,jo,kw\" responsive-dropdown=\'true\' default-country=\"ps\" international-phone-number name=\"phoneNumber\" ng-model=\"phoneNumber\" ng-required=\"true\" />\n                    <span style=\"top:15px;right: 21px;\" ng-show=\"mobileNumberForm.phoneNumber.$valid\" class=\"fa fa-check-circle text-success form-control-feedback\" aria-hidden=\"true\"></span>\n                </div>\n            </div>\n            <div class=\"form-group form-group-lg\">\n                <div class=\"col-sm-12\">\n                    <button ng-disabled=\"submittingPhone\" type=\'submit\' class=\'btn btn-primary btn-block btn-lg\'>\n                        <span> Send Me SMS </span>\n                        <span ng-if=\"submittingPhone\"> <i class=\"fa fa-spinner fa-spin\"></i> \n                        </span>\n                    </button>\n                </div>\n            </div>\n        </div>\n        <div class=\"col-sm-4\">\n            <p class=\"help-block\">\n                <strong>We will send you a verification code by SMS.</strong>\n                <br />You will need this code to confirm your booking.</p>\n        </div>\n    </div>\n</form>\n");
 $templateCache.put("sms-verification.html","\n<mobile-number>\n</mobile-number>\n\n<verification-code>\n</verification-code>\n\n\n<verification-success>\n</verification-success>\n");
-$templateCache.put("verification-code.html","<form class=\"form-horizontal\" name=\"verificationCodeForm\" ng-submit=\'submitCode(code)\'>\n    <div class=\"form-group form-group-lg\">\n        <label for=\"inputEmail3\" class=\"col-sm-3 control-label\">Verfication Code</label>\n        <div class=\"col-sm-5\">\n            <div class=\"form-group form-group-lg\">\n                <div class=\"col-sm-12\">\n                    <div class=\"input-group\">\n                        <input class=\'form-control\' type=\'text\' name=\"code\" ng-model=\'code\' ng-minlength=\"5\" ng-maxlength=\"7\" ng-required=\'true\' placeholder=\'_______ \' \n                        style=\"font-size: 30px;height: 70px;letter-spacing: 7px;font-family: monospace;text-align: center; color:black; \" />\n                        <span class=\"input-group-btn\">\n                            <a class=\"btn btn-default\" type=\"button\" style=\"padding: 14px 24px;font-size: 28px;color:black;\" disabled><i class=\"fa fa-lock\"></i>\n                            </a>\n                        </span>\n                    </div>\n                </div>\n            </div>\n            <div class=\'form-group form-group-lg\'>\n                <div class=\"col-sm-12\">\n                    <button type=\'submit\' class=\'btn btn-primary btn-block btn-lg\'>Complete Booking</button>\n                </div>\n            </div>\n        </div>\n        <div class=\"col-sm-4\">\n            <p class=\"help-block\">\n                Your code is being delivered by SMS.\n                <br>This may take up to 2:30 minutes depending on your network operator.\n                <br>\n                <strong>\n                    <small>\n                        <timer autostart=\"false\" countdown=\"5\" max-time-unit=\"\'minute\'\" interval=\"1000\" finish-callback=\"timerFinished()\">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer> <i class=\"fa fa-clock-o\"></i> passed.\n                    </small>\n                </strong>\n\n                <span class=\"text-center\" ng-show=\"timeout\">\n                    Didn\'t receive code ? <a ng-click=\"tryAgain()\" href=\"\">Try a different number</a>\n                </span>\n            </p>\n        </div>\n    </div>\n</form>");}]);
+$templateCache.put("verification-code.html","<form class=\"form-horizontal\" name=\"verificationCodeForm\" ng-submit=\'submitCode(code)\'>\n    <div class=\"form-group form-group-lg\">\n        <label for=\"inputEmail3\" class=\"col-sm-3 control-label\">Verfication Code</label>\n        <div class=\"col-sm-5\">\n            <div class=\"form-group form-group-lg\">\n                <div class=\"col-sm-12\">\n                    <div class=\"input-group\">\n                        <input class=\'form-control\' type=\'text\' name=\"code\" ng-model=\'code\' ng-minlength=\"5\" ng-maxlength=\"7\" ng-required=\'true\' placeholder=\'_______ \' style=\"font-size: 30px;height: 70px;letter-spacing: 7px;font-family: monospace;text-align: center; color:black; \" />\n                        <span class=\"input-group-btn\">\n                            <a class=\"btn btn-default\" type=\"button\" style=\"padding: 14px 24px;font-size: 28px;color:black;\" disabled><i class=\"fa fa-lock\"></i>\n                            </a>\n                        </span>\n                    </div>\n                </div>\n            </div>\n            <div class=\"row\">\n                <div class=\"col-md-12\">\n                    <button type=\"submit\" class=\"btn btn-block book-btn-2 has-label\" ng-disabled=\"parent.booking\">\n                        <span class=\"the-label\">\n                            <i class=\"fa fa-{{ booking ? \'spin fa-spinner\' : \'lock\' }}\"></i>\n                        </span>\n                        <span>Complete Booking</span>\n                    </button>\n                </div>\n            </div>\n        </div>\n        <div class=\"col-sm-4\">\n        \n            <div ng-if=\"!error\">\n                <p class=\"help-block\" ng-if=\"!error\">\n                    Your code is being delivered by SMS.\n                    <br>This may take up to 2:30 minutes depending on your network operator.\n                    <br>\n                    <strong>\n                    <small>\n                        <timer autostart=\"false\" countdown=\"5\" max-time-unit=\"\'minute\'\" interval=\"1000\" finish-callback=\"timerFinished()\">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer> <i class=\"fa fa-clock-o\"></i> passed.\n                    </small>\n                </strong>\n                    <span class=\"text-center\" ng-show=\"timeout\">\n                    Didn\'t receive code ? <a ng-click=\"tryAgain()\" href=\"\">Try a different number</a>\n                </span>\n                </p>\n            </div>\n\n            <div ng-if=\"error\">\n                <p class=\"help-block text-danger\">\n                    <strong>\n                         <i class=\"fa fa-warning fa-2x pull-left\"></i> {{ error.message }}\n                         <hr>\n                         Didn\'t receive code ? <a ng-click=\"tryAgain()\" href=\"\">Try a different number</a>\n                    </strong>\n                </p>\n            </div>\n\n        </div>\n    </div>\n</form>\n");}]);
 	// Deez is the nickname for directives
 	var Deez = angular.module('ysSmsVerification.directives', []);
 
@@ -145,9 +145,9 @@ $templateCache.put("verification-code.html","<form class=\"form-horizontal\" nam
 					this.screens = {};
 					// Add screen (called on intialization of screens)
 					this.addScreen = function(name, scope) {
-						that.screens[name] = scope;
-					}
-					// Set active screen
+							that.screens[name] = scope;
+						}
+						// Set active screen
 					this.activateScreen = function(name) {
 
 						if (!that.screens[name]) {
@@ -156,9 +156,9 @@ $templateCache.put("verification-code.html","<form class=\"form-horizontal\" nam
 
 						// Turn off all other screens
 						angular.forEach(that.screens, function(screen) {
-							screen.active = false;
-						})
-						// Activate desiered screen
+								screen.active = false;
+							})
+							// Activate desiered screen
 						that.screens[name].active = true;
 					}
 
@@ -171,12 +171,9 @@ $templateCache.put("verification-code.html","<form class=\"form-horizontal\" nam
 
 					$scope.$on('verificationCode:success', function(e, data) {
 						// Emit success event
-						$scope.$emit('smsVerification:success',data);
+						$scope.$emit('smsVerification:success', data);
 						// set scope data
 						$scope.smsVerificationData = data;
-						// Activate code activation scren
-						that.activateScreen('verificationSuccess');
-
 					})
 
 					$scope.$on('verificationCode:tryagain', function(e) {
@@ -213,52 +210,41 @@ $templateCache.put("verification-code.html","<form class=\"form-horizontal\" nam
 				restrict: 'EA',
 				require: '^ysSmsVerification',
 				controller: function($scope, $element, $attrs, smsService) {
+
 					// Set active by default
 					$scope.active = true;
+					$scope.utilsScript = Yamsafer.urls.utilsScriptPath;
+					
 					// Function called on submit.
 					$scope.submitNumber = function(num) {
 
 						if ($scope.mobileNumberForm.$valid) {
+
+							// Set submitting phone flag to true obviously
+							$scope.submittingPhone = true;
+
 							// Construct number object
 							var number = {};
 							number.country_code = "+" + $('input[name="phoneNumber"]').intlTelInput("getSelectedCountryData").dialCode;
 							number.phone_number = $scope.mobileNumberForm.phoneNumber.$viewValue.replace(number.country_code, "").replace(/\s+/g, '');
 
-							// Set submitting phone flag to true obviously
-							$scope.submittingPhone = true;
-
-							// In case of success
-							var submitSuccess = function(data) {
-
-								if (data.status != "error") {
-
-									smsService.dataAttr('phone_number', number.phone_number);
-									smsService.dataAttr('country_code', number.country_code);
-
-									// emit success event with number value
-									$scope.$emit('mobileNumber:success', number);
-
-								} else {
-									// todo: handle error
-								}
-
-								$scope.submittingPhone = false;
-							};
-
-							// In case of failure
-							var submitFail = function(data) {
-								$scope.fail = true;
-								$scope.$emit('mobileNumber:fail');
-							};
-
 							// Submit phone number
-							smsService.send(number).then(submitSuccess, submitFail);
-
-						} else {
-
+							smsService.send(number).then(
+								function submitSuccess(data) {
+									if (data.status != "error") {
+										smsService.dataAttr('phone_number', number.phone_number);
+										smsService.dataAttr('country_code', number.country_code);
+										$scope.$emit('mobileNumber:success', number);
+									} else {
+										// todo: handle error
+									}
+									$scope.submittingPhone = false;
+								},
+								function submitFail(data) {
+									$scope.fail = true;
+									$scope.$emit('mobileNumber:fail');
+								});
 						}
-
-
 
 					}
 				},
@@ -295,36 +281,42 @@ $templateCache.put("verification-code.html","<form class=\"form-horizontal\" nam
 			return {
 				restrict: 'EA',
 				require: '^ysSmsVerification',
-				scope: {},
+				scope: true,
 				transclude: true,
 				controller: function($scope, $element, $attrs, smsService) {
-
+					// $scope.active = true;
 					$scope.submitCode = function(code) {
-						var isValidForm = $scope.verificationCodeForm.$valid;
-						if (isValidForm) {
 
-							var postData = {
-									'phone_number': smsService.dataAttr('phone_number'),
-									'country_code': smsService.dataAttr('country_code'),
-									'code': code
-								},
-								success = function(data) {
-									if (data.status != "verification failed") {
-										$scope.$emit('verificationCode:success', postData)
-									} else {
-										// todo: display message that code is wrong
-										console.log(data.message);
-									}
-								},
-								fail = function(data) {
-									console.log(data.error, data.message)
+						$scope.$emit('verificationCode:submitting', function(reply) {
+
+							if (reply.success) {
+								var isValidForm = $scope.verificationCodeForm.$valid;
+								if (isValidForm) {
+
+									$scope.booking = true;
+
+									var postData = {
+											'phone_number': smsService.dataAttr('phone_number'),
+											'country_code': smsService.dataAttr('country_code'),
+											'code': code
+										},
+										success = function(data) {
+											if (data.status != "verification failed") {
+												$scope.$emit('verificationCode:success', postData)
+											} else {
+												$scope.error = data;
+												$scope.booking = false;
+											}
+										},
+										fail = function(data) {
+											$scope.error = data;
+											$scope.booking = false;
+										}
+									smsService.verify(postData).then(success, fail);
 								}
+							}
+						});
 
-							console.log(postData);
-
-							smsService.verify(postData).then(success, fail);
-
-						}
 					}
 
 					$scope.timerFinished = function() {
@@ -334,6 +326,7 @@ $templateCache.put("verification-code.html","<form class=\"form-horizontal\" nam
 					}
 
 					$scope.tryAgain = function() {
+						$scope.error = false;
 						$scope.timeout = false;
 						$scope.$emit('verificationCode:tryagain');
 					}
@@ -440,11 +433,11 @@ angular.module('ysSmsVerification.services', []).service('smsService', ['$q',
 			// }, 1000)
 
 			$http.post('https://staging.yamsafer.me/sms/verify', postData).success(function(data, status, headers, config) {
-				
+
 				if (status == 200) {
 					deferred.resolve(data);
 				}
-				
+
 				if (status.code == 400 || status.code == 500) {
 					deferred.reject(data);
 				}

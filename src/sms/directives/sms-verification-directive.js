@@ -22,9 +22,9 @@
 					this.screens = {};
 					// Add screen (called on intialization of screens)
 					this.addScreen = function(name, scope) {
-						that.screens[name] = scope;
-					}
-					// Set active screen
+							that.screens[name] = scope;
+						}
+						// Set active screen
 					this.activateScreen = function(name) {
 
 						if (!that.screens[name]) {
@@ -33,9 +33,9 @@
 
 						// Turn off all other screens
 						angular.forEach(that.screens, function(screen) {
-							screen.active = false;
-						})
-						// Activate desiered screen
+								screen.active = false;
+							})
+							// Activate desiered screen
 						that.screens[name].active = true;
 					}
 
@@ -48,12 +48,9 @@
 
 					$scope.$on('verificationCode:success', function(e, data) {
 						// Emit success event
-						$scope.$emit('smsVerification:success',data);
+						$scope.$emit('smsVerification:success', data);
 						// set scope data
 						$scope.smsVerificationData = data;
-						// Activate code activation scren
-						that.activateScreen('verificationSuccess');
-
 					})
 
 					$scope.$on('verificationCode:tryagain', function(e) {
@@ -90,52 +87,41 @@
 				restrict: 'EA',
 				require: '^ysSmsVerification',
 				controller: function($scope, $element, $attrs, smsService) {
+
 					// Set active by default
 					$scope.active = true;
+					$scope.utilsScript = Yamsafer.urls.utilsScriptPath;
+					
 					// Function called on submit.
 					$scope.submitNumber = function(num) {
 
 						if ($scope.mobileNumberForm.$valid) {
+
+							// Set submitting phone flag to true obviously
+							$scope.submittingPhone = true;
+
 							// Construct number object
 							var number = {};
 							number.country_code = "+" + $('input[name="phoneNumber"]').intlTelInput("getSelectedCountryData").dialCode;
 							number.phone_number = $scope.mobileNumberForm.phoneNumber.$viewValue.replace(number.country_code, "").replace(/\s+/g, '');
 
-							// Set submitting phone flag to true obviously
-							$scope.submittingPhone = true;
-
-							// In case of success
-							var submitSuccess = function(data) {
-
-								if (data.status != "error") {
-
-									smsService.dataAttr('phone_number', number.phone_number);
-									smsService.dataAttr('country_code', number.country_code);
-
-									// emit success event with number value
-									$scope.$emit('mobileNumber:success', number);
-
-								} else {
-									// todo: handle error
-								}
-
-								$scope.submittingPhone = false;
-							};
-
-							// In case of failure
-							var submitFail = function(data) {
-								$scope.fail = true;
-								$scope.$emit('mobileNumber:fail');
-							};
-
 							// Submit phone number
-							smsService.send(number).then(submitSuccess, submitFail);
-
-						} else {
-
+							smsService.send(number).then(
+								function submitSuccess(data) {
+									if (data.status != "error") {
+										smsService.dataAttr('phone_number', number.phone_number);
+										smsService.dataAttr('country_code', number.country_code);
+										$scope.$emit('mobileNumber:success', number);
+									} else {
+										// todo: handle error
+									}
+									$scope.submittingPhone = false;
+								},
+								function submitFail(data) {
+									$scope.fail = true;
+									$scope.$emit('mobileNumber:fail');
+								});
 						}
-
-
 
 					}
 				},
@@ -172,36 +158,42 @@
 			return {
 				restrict: 'EA',
 				require: '^ysSmsVerification',
-				scope: {},
+				scope: true,
 				transclude: true,
 				controller: function($scope, $element, $attrs, smsService) {
-
+					// $scope.active = true;
 					$scope.submitCode = function(code) {
-						var isValidForm = $scope.verificationCodeForm.$valid;
-						if (isValidForm) {
 
-							var postData = {
-									'phone_number': smsService.dataAttr('phone_number'),
-									'country_code': smsService.dataAttr('country_code'),
-									'code': code
-								},
-								success = function(data) {
-									if (data.status != "verification failed") {
-										$scope.$emit('verificationCode:success', postData)
-									} else {
-										// todo: display message that code is wrong
-										console.log(data.message);
-									}
-								},
-								fail = function(data) {
-									console.log(data.error, data.message)
+						$scope.$emit('verificationCode:submitting', function(reply) {
+
+							if (reply.success) {
+								var isValidForm = $scope.verificationCodeForm.$valid;
+								if (isValidForm) {
+
+									$scope.booking = true;
+
+									var postData = {
+											'phone_number': smsService.dataAttr('phone_number'),
+											'country_code': smsService.dataAttr('country_code'),
+											'code': code
+										},
+										success = function(data) {
+											if (data.status != "verification failed") {
+												$scope.$emit('verificationCode:success', postData)
+											} else {
+												$scope.error = data;
+												$scope.booking = false;
+											}
+										},
+										fail = function(data) {
+											$scope.error = data;
+											$scope.booking = false;
+										}
+									smsService.verify(postData).then(success, fail);
 								}
+							}
+						});
 
-							console.log(postData);
-
-							smsService.verify(postData).then(success, fail);
-
-						}
 					}
 
 					$scope.timerFinished = function() {
@@ -211,6 +203,7 @@
 					}
 
 					$scope.tryAgain = function() {
+						$scope.error = false;
 						$scope.timeout = false;
 						$scope.$emit('verificationCode:tryagain');
 					}
