@@ -1,11 +1,11 @@
-<form class="form-horizontal" name="verificationCodeForm" ng-submit='submitCode(code)'>
+<form class="form-horizontal" name="verificationCodeForm" >
     <div class="form-group form-group-lg">
         <label for="inputEmail3" class="col-sm-3 control-label">Verfication Code</label>
         <div class="col-sm-5">
-            <div class="form-group form-group-lg">
+            <div class="form-group form-group-lg has-feedback" show-errors>
                 <div class="col-sm-12">
                     <div class="input-group">
-                        <input class='form-control' type='text' name="code" ng-model='code' ng-minlength="5" ng-maxlength="7" ng-required='true' placeholder='_______ ' style="font-size: 30px;height: 70px;letter-spacing: 7px;font-family: monospace;text-align: center; color:black; " />
+                        <input id="verification-code" class='form-control' type='text' name="code" ng-model='code' ng-minlength="5" ng-maxlength="7" ng-required='true' placeholder='_______ ' style="font-size: 30px;height: 70px;letter-spacing: 7px;font-family: monospace;text-align: center; color:black; " />
                         <span class="input-group-btn">
                             <a class="btn btn-default" type="button" style="padding: 14px 24px;font-size: 28px;color:black;" disabled><i class="fa fa-lock"></i>
                             </a>
@@ -15,7 +15,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-block book-btn-2 has-label" ng-disabled="parent.booking">
+                    <button type="button" ng-click='submitCode(code)' class="btn btn-block book-btn-2 has-label" ng-disabled="booking">
                         <span class="the-label">
                             <i class="fa fa-{{ booking ? 'spin fa-spinner' : 'lock' }}"></i>
                         </span>
@@ -37,7 +37,7 @@
                     </small>
                 </strong>
                     <span class="text-center" ng-show="timeout">
-                    Didn't receive code ? <a ng-click="tryAgain()" href="">Try a different number</a>
+                    Didn't receive code? <br> <a ng-click="tryAgain()" href="">Try a different number</a>
                 </span>
                 </p>
             </div>

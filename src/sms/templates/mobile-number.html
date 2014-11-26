@@ -1,4 +1,4 @@
-<form class="form-horizontal" name="mobileNumberForm" ng-submit='submitNumber(phoneNumber)'>
+<form class="form-horizontal" name="mobileNumberForm" >
 
     <div class="form-group form-group-lg has-feedback">
         <label for="inputEmail3" class="col-sm-3 control-label">Phone Number</label>
@@ -10,13 +10,13 @@
 
             <div class="form-group form-group-lg has-feedback">
                 <div class="col-sm-12">
-                    <input class='form-control input-lg' type="text" utils-script="'utilsScript'" preferred-countries="ps, sa,jo,kw" responsive-dropdown='true' default-country="ps" international-phone-number name="phoneNumber" ng-model="phoneNumber" ng-required="true" />
+                    <input class='form-control input-lg' type="text" utils-script="{{ utilsScript }}" preferred-countries="ps, sa,jo,kw" responsive-dropdown='true' default-country="ps" international-phone-number name="phoneNumber" ng-model="phoneNumber" ng-required="true" />
                     <span style="top:15px;right: 21px;" ng-show="mobileNumberForm.phoneNumber.$valid" class="fa fa-check-circle text-success form-control-feedback" aria-hidden="true"></span>
                 </div>
             </div>
             <div class="form-group form-group-lg">
                 <div class="col-sm-12">
-                    <button ng-disabled="submittingPhone" type='submit' class='btn btn-primary btn-block btn-lg'>
+                    <button ng-disabled="submittingPhone" type='buttom' ng-click="submitNumber(phoneNumber)" class='btn btn-primary btn-block btn-lg'>
                         <span> Send Me SMS </span>
                         <span ng-if="submittingPhone"> <i class="fa fa-spinner fa-spin"></i> 
                         </span>

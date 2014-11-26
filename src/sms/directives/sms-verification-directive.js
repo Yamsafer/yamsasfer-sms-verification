@@ -91,7 +91,7 @@
 					// Set active by default
 					$scope.active = true;
 					$scope.utilsScript = Yamsafer.urls.utilsScriptPath;
-					
+					console.log($scope.utilsScript);
 					// Function called on submit.
 					$scope.submitNumber = function(num) {
 
@@ -166,6 +166,8 @@
 
 						$scope.$emit('verificationCode:submitting', function(reply) {
 
+							console.log(reply);
+
 							if (reply.success) {
 								var isValidForm = $scope.verificationCodeForm.$valid;
 								if (isValidForm) {
@@ -191,6 +193,8 @@
 										}
 									smsService.verify(postData).then(success, fail);
 								}
+							} else {
+								$('#verification-code').focus();
 							}
 						});
 
