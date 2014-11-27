@@ -1,23 +1,25 @@
 <form class="form-horizontal" name="mobileNumberForm" >
 
     <div class="form-group form-group-lg has-feedback">
-        <label for="inputEmail3" class="col-sm-3 control-label">Phone Number</label>
+        <label for="inputEmail3" class="col-sm-3 control-label">{{ 'phone_number' | translate }}</label>
         <div class="col-sm-5">
 
             <div ng-if="fail" class="alert alert-danger text-center">
-                Something went wrong, make sure you entered a valid phone number, or try a different one
+                {{ 'something_went_wrong' | translate }}
             </div>
 
             <div class="form-group form-group-lg has-feedback">
                 <div class="col-sm-12">
-                    <input class='form-control input-lg' type="text" utils-script="{{ utilsScript }}" preferred-countries="ps, sa,jo,kw" responsive-dropdown='true' default-country="ps" international-phone-number name="phoneNumber" ng-model="phoneNumber" ng-required="true" />
+                    <input class='form-control input-lg' type="text" utils-script="{{ utilsScript }}" 
+                    preferred-countries="ps, sa,jo,kw,qa,bh,uae,"
+                     responsive-dropdown='true' default-country="ps" international-phone-number name="phoneNumber" ng-model="phoneNumber" ng-required="true" />
                     <span style="top:15px;right: 21px;" ng-show="mobileNumberForm.phoneNumber.$valid" class="fa fa-check-circle text-success form-control-feedback" aria-hidden="true"></span>
                 </div>
             </div>
             <div class="form-group form-group-lg">
                 <div class="col-sm-12">
                     <button ng-disabled="submittingPhone" type='buttom' ng-click="submitNumber(phoneNumber)" class='btn btn-primary btn-block btn-lg'>
-                        <span> Send Me SMS </span>
+                        <span> {{ 'send_me_sms' | translate }} </span>
                         <span ng-if="submittingPhone"> <i class="fa fa-spinner fa-spin"></i> 
                         </span>
                     </button>
@@ -26,8 +28,8 @@
         </div>
         <div class="col-sm-4">
             <p class="help-block">
-                <strong>We will send you a verification code by SMS.</strong>
-                <br />You will need this code to confirm your booking.</p>
+                <strong>{{ 'send_you_verification' | translate }}</strong>
+                <br />{{ 'code_to_confirm' | translate }}</p>
         </div>
     </div>
 </form>

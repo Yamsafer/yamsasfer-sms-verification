@@ -1,6 +1,6 @@
 <form class="form-horizontal" name="verificationCodeForm" >
     <div class="form-group form-group-lg">
-        <label for="inputEmail3" class="col-sm-3 control-label">Verfication Code</label>
+        <label for="inputEmail3" class="col-sm-3 control-label">{{ 'verification_code' | translate }}</label>
         <div class="col-sm-5">
             <div class="form-group form-group-lg has-feedback" show-errors>
                 <div class="col-sm-12">
@@ -19,7 +19,7 @@
                         <span class="the-label">
                             <i class="fa fa-{{ booking ? 'spin fa-spinner' : 'lock' }}"></i>
                         </span>
-                        <span>Complete Booking</span>
+                        <span>{{ 'complete_booking' | translate }}</span>
                     </button>
                 </div>
             </div>
@@ -28,16 +28,17 @@
         
             <div ng-if="!error">
                 <p class="help-block" ng-if="!error">
-                    Your code is being delivered by SMS.
-                    <br>This may take up to 2:30 minutes depending on your network operator.
+                    {{ 'code_being_delivered' | translate }}
+                    <br>{{ 'minutes_note' | translate }}
                     <br>
                     <strong>
                     <small>
-                        <timer autostart="false" countdown="5" max-time-unit="'minute'" interval="1000" finish-callback="timerFinished()">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer> <i class="fa fa-clock-o"></i> passed.
+                        <timer autostart="false" countdown="5" max-time-unit="'minute'" interval="1000" finish-callback="timerFinished()">
+                        {{mminutes}} {{ 'minute' | translate  }} {{minutesS}}, {{sseconds}} {{ 'second' | translate }} {{secondsS}}</timer> <i class="fa fa-clock-o"></i> {{ 'passed' | translate }}.
                     </small>
                 </strong>
                     <span class="text-center" ng-show="timeout">
-                    Didn't receive code? <br> <a ng-click="tryAgain()" href="">Try a different number</a>
+                    {{ 'did_not_receive_code' | translate }} <br> <a ng-click="tryAgain()" href=""> {{ 'try_different_number' | translate }} </a>
                 </span>
                 </p>
             </div>
@@ -47,7 +48,7 @@
                     <strong>
                          <i class="fa fa-warning fa-2x pull-left"></i> {{ error.message }}
                          <hr>
-                         Didn't receive code ? <a ng-click="tryAgain()" href="">Try a different number</a>
+                         {{ 'did_not_receive_code' | translate }} <a ng-click="tryAgain()" href="">{{ 'try_different_number' | translate }} </a>
                     </strong>
                 </p>
             </div>
