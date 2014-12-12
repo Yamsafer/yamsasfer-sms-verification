@@ -1,7 +1,7 @@
 angular.module('ysSmsVerification.services', []).service('smsService', ['$q',
-	'$http', '$timeout',
+	'$http', '$timeout', '$analytics',
 
-	function($q, $http, $timeout) {
+	function($q, $http, $timeout,$analytics) {
 
 		var smsService = {};
 
@@ -24,7 +24,6 @@ angular.module('ysSmsVerification.services', []).service('smsService', ['$q',
 		// expects a phone number data.phone_number;
 		smsService.send = function(num) {
 
-			console.log(num)
 			var deferred = $q.defer();
 
 			// $timeout(function() {
@@ -32,8 +31,8 @@ angular.module('ysSmsVerification.services', []).service('smsService', ['$q',
 			// 		status: "ok"
 			// 	});
 			// }, 1000)
-
-			$http.post('https://staging.yamsafer.me/sms/create', num).success(function(data, status, headers, config) {
+			var url = Yamsafer.urls.api + 'sms/create';
+			$http.post(url, num).success(function(data, status, headers, config) {
 				deferred.resolve(data);
 			}).error(function(data, status, headers, config) {
 				deferred.reject(data);
@@ -56,14 +55,16 @@ angular.module('ysSmsVerification.services', []).service('smsService', ['$q',
 			// 		status: "ok"
 			// 	});
 			// }, 1000)
-
-			$http.post('https://staging.yamsafer.me/sms/verify', postData).success(function(data, status, headers, config) {
+			var url = Yamsafer.urls.api + 'sms/verify';
+			$http.post(url, postData).success(function(data, status, headers, config) {
 
 				if (status == 200) {
 					deferred.resolve(data);
 				}
 
 				if (status.code == 400 || status.code == 500) {
+
+
 					deferred.reject(data);
 				}
 

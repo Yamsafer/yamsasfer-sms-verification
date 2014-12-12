@@ -8,7 +8,7 @@
                 {{ 'something_went_wrong' | translate }}
             </div>
 
-            <div class="form-group form-group-lg has-feedback">
+            <div class="form-group form-group-lg has-feedback" show-errors>
                 <div class="col-sm-12">
                     <input class='form-control input-lg' type="text" utils-script="{{ utilsScript }}" 
                     preferred-countries="ps, sa,jo,kw,qa,bh,uae,"
@@ -18,7 +18,7 @@
             </div>
             <div class="form-group form-group-lg">
                 <div class="col-sm-12">
-                    <button ng-disabled="submittingPhone" type='buttom' ng-click="submitNumber(phoneNumber)" class='btn btn-primary btn-block btn-lg'>
+                    <button ng-disabled="submittingPhone" type='buttom' ng-click="submitNumber(phoneNumber)" class='btn btn-primary btn-block btn-lg'  analytics-on="click" analytics-event="Send Me SMS button" analytics-category="Checkout">
                         <span> {{ 'send_me_sms' | translate }} </span>
                         <span ng-if="submittingPhone"> <i class="fa fa-spinner fa-spin"></i> 
                         </span>

@@ -1,4 +1,4 @@
-<form class="form-horizontal" name="verificationCodeForm" >
+<form class="form-horizontal" name="verificationCodeForm">
     <div class="form-group form-group-lg">
         <label for="inputEmail3" class="col-sm-3 control-label">{{ 'verification_code' | translate }}</label>
         <div class="col-sm-5">
@@ -15,17 +15,22 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button type="button" ng-click='submitCode(code)' class="btn btn-block book-btn-2 has-label" ng-disabled="booking">
+                    <button type="button" ng-click="submitCode(code,$event)"  class="btn btn-block book-btn-2 has-label" ng-disabled="booking">
                         <span class="the-label">
                             <i class="fa fa-{{ booking ? 'spin fa-spinner' : 'lock' }}"></i>
                         </span>
                         <span>{{ 'complete_booking' | translate }}</span>
                     </button>
+                    <br>
+                    <p class="text-center" style="margin-top:10px;">
+                        {{ 'agreement_1' | translate }}
+                        <a target="_blank" href="https://www.yamsafer.me/en/info/terms-of-use"> {{ 'terms' | translate }}</a> & <a data-placement="top" data-trigger="click" data-template="demo.html" data-auto-close="1" bs-popover ng-click="">{{ 'cancelation_policy' | translate }}</a> {{ 'agreement_2' | translate }}
+
+                    </p>
                 </div>
             </div>
         </div>
         <div class="col-sm-4">
-        
             <div ng-if="!error">
                 <p class="help-block" ng-if="!error">
                     {{ 'code_being_delivered' | translate }}
@@ -33,7 +38,7 @@
                     <br>
                     <strong>
                     <small>
-                        <timer autostart="false" countdown="5" max-time-unit="'minute'" interval="1000" finish-callback="timerFinished()">
+                        <timer autostart="false" countdown="120" max-time-unit="'minute'" interval="1000" finish-callback="timerFinished()">
                         {{mminutes}} {{ 'minute' | translate  }} {{minutesS}}, {{sseconds}} {{ 'second' | translate }} {{secondsS}}</timer> <i class="fa fa-clock-o"></i> {{ 'passed' | translate }}.
                     </small>
                 </strong>
@@ -42,7 +47,6 @@
                 </span>
                 </p>
             </div>
-
             <div ng-if="error">
                 <p class="help-block text-danger">
                     <strong>
@@ -52,7 +56,33 @@
                     </strong>
                 </p>
             </div>
-
         </div>
     </div>
 </form>
+
+
+<script type="text/ng-template" id="demo.html">
+    <div class="popover" style="min-width:452px !important;">
+        <div class="arrow"></div>
+        <h3 class="popover-title"> {{ 'cancellation_policy' | translate }} </h3>
+        <div class="popover-content">
+            <div class="panel-group" bs-collapse data-animation="false">
+                <div class="panel panel-default" ng-repeat="room in order.rooms">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href="" bs-collapse-toggle ng-bind-html="room.roomName">                            
+                            </a>
+                      </h4>
+                    </div>
+                    <div class="panel-collapse" bs-collapse-target>
+                        <div class="panel-body" ng-bind-html="room.cancellation_policy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</script>

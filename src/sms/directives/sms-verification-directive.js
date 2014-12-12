@@ -91,7 +91,7 @@
 					// Set active by default
 					$scope.active = true;
 					$scope.utilsScript = Yamsafer.urls.utilsScriptPath;
-					console.log($scope.utilsScript);
+
 					// Function called on submit.
 					$scope.submitNumber = function(num) {
 
@@ -120,6 +120,8 @@
 								function submitFail(data) {
 									$scope.fail = true;
 									$scope.$emit('mobileNumber:fail');
+									// Set submitting phone flag to true obviously
+									$scope.submittingPhone = false;
 								});
 						}
 
@@ -153,8 +155,8 @@
 	*/
 
 	Deez.directive('verificationCode', [
-		'$templateCache', '$compile',
-		function($templateCache, $compile) {
+		'$templateCache', '$compile', '$analytics',
+		function($templateCache, $compile, $analytics) {
 			return {
 				restrict: 'EA',
 				require: '^ysSmsVerification',
@@ -162,11 +164,14 @@
 				transclude: true,
 				controller: function($scope, $element, $attrs, smsService) {
 					// $scope.active = true;
-					$scope.submitCode = function(code) {
+					$scope.submitCode = function(code, $event) {
+
+						$event.preventDefault();
+						$event.stopPropagation();
 
 						$scope.$emit('verificationCode:submitting', function(reply) {
 
-							console.log(reply);
+							console.log("reply", reply);
 
 							if (reply.success) {
 								var isValidForm = $scope.verificationCodeForm.$valid;
@@ -183,6 +188,13 @@
 											if (data.status != "verification failed") {
 												$scope.$emit('verificationCode:success', postData)
 											} else {
+
+												$analytics.eventTrack('SMS Verification failed ', {
+													category: 'Checkout',
+													label: "Server error",
+													reason: data,
+												});
+
 												$scope.error = data;
 												$scope.booking = false;
 											}
@@ -190,6 +202,13 @@
 										fail = function(data) {
 											$scope.error = data;
 											$scope.booking = false;
+
+													$analytics.eventTrack('SMS Verification failed (Server Error)', {
+													category: 'Checkout',
+													label: "Server error",
+													reason: data,
+												});
+
 										}
 									smsService.verify(postData).then(success, fail);
 								}
