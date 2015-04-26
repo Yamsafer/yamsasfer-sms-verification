@@ -26,11 +26,6 @@ angular.module('ysSmsVerification.services', []).service('smsService', ['$q',
 
 			var deferred = $q.defer();
 
-			// $timeout(function() {
-			// 	deferred.resolve({
-			// 		status: "ok"
-			// 	});
-			// }, 1000)
 			var url = Yamsafer.urls.api + 'sms/create';
 			$http.post(url, num).success(function(data, status, headers, config) {
 				deferred.resolve(data);
