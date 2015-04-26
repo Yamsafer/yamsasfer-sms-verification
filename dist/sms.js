@@ -442,17 +442,9 @@ angular.module('ysSmsVerification.services', []).service('smsService', ['$q',
 		// Verify code
 		// expects code
 		smsService.verify = function(postData) {
-			// $http.post('http://staging.yamsafer.me/sms/resend'
-
-			// $http.post('http://staging.yamsafer.me/sms/verify'
 
 			var deferred = $q.defer();
 
-			// $timeout(function() {
-			// 	deferred.resolve({
-			// 		status: "ok"
-			// 	});
-			// }, 1000)
 			var url = Yamsafer.urls.api + 'sms/verify';
 			$http.post(url, postData).success(function(data, status, headers, config) {
 
