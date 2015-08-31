@@ -13,6 +13,7 @@ angular.module('ysSmsVerification.services', []).service('smsService', ['$q',
 		}
 
 		smsService.dataAttr = function(name, value) {
+
 			if (value) {
 				data[name] = value;
 			} else {
@@ -27,6 +28,10 @@ angular.module('ysSmsVerification.services', []).service('smsService', ['$q',
 			var deferred = $q.defer();
 
 			var url = Yamsafer.urls.api + 'sms/create';
+			if (num.country_code == '+970') {
+				num.country_code = '+972';
+			}
+
 			$http.post(url, num).success(function(data, status, headers, config) {
 				deferred.resolve(data);
 			}).error(function(data, status, headers, config) {
